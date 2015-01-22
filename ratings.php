@@ -1,10 +1,10 @@
 <?php
 
-if (!isset($_GET['title']) || $_GET['title'] == "") {
+if (!isset($_GET['rating']) || $_GET['rating'] == "") {
   header('Location: search.php');
 }
 
-$title = $_GET['title'];
+$rating = $_GET['rating'];
 
 $host = 'itp460.usc.edu';
 $dbname = 'dvd';
@@ -22,15 +22,17 @@ $sql = "
   ON dvds.format_id = formats.id
   INNER JOIN ratings
   ON dvds.rating_id = ratings.id
-  WHERE title LIKE ?
+  WHERE rating_name LIKE ?
 ";
 
 $statement = $pdo->prepare($sql);
-$like = '%' . $title . '%';
+$like = '%' . $rating . '%';
 $statement->bindParam(1, $like);
 
 $statement->execute();
 $results = $statement->fetchAll(PDO::FETCH_OBJ);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +44,7 @@ $results = $statement->fetchAll(PDO::FETCH_OBJ);
   </head>
   <div class="container">
     <div class="page-header">
-      <h3>You searched for: <em><?php echo $title ?></em></h3>
+      <h3>All Films Rated <em><?php echo $rating ?></em></h3>
     </div>
 
     <ul class="list-group">
