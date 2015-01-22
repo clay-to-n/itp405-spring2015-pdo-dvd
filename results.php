@@ -31,6 +31,7 @@ $statement->bindParam(1, $like);
 
 $statement->execute();
 $results = $statement->fetchAll(PDO::FETCH_OBJ);
+
 ?>
 
 <!DOCTYPE html>
@@ -42,9 +43,19 @@ $results = $statement->fetchAll(PDO::FETCH_OBJ);
   </head>
   <div class="container">
     <div class="page-header">
-      <h3>You searched for: <em><?php echo $title ?></em></h3>
+      <h3>
+      <a role="button" class="btn btn-link btn-lg" aria-label="Left Align" href="search.php">
+        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+      </a>
+      You searched for: <em><?php echo $title ?></em></h3>
     </div>
 
+    <?php
+      // If no results, we'll let the user know
+      if (count($results) == 0) {
+          echo('No results! Try <a href="search.php">searching for something else.</a>');
+      }
+    ?>
     <ul class="list-group">
       <?php foreach($results as $result) : ?>
       <li class="list-group-item col-sm-12"> 

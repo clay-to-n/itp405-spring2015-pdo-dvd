@@ -26,7 +26,7 @@ $sql = "
 ";
 
 $statement = $pdo->prepare($sql);
-$like = '%' . $rating . '%';
+$like = $rating;
 $statement->bindParam(1, $like);
 
 $statement->execute();
@@ -44,7 +44,12 @@ $results = $statement->fetchAll(PDO::FETCH_OBJ);
   </head>
   <div class="container">
     <div class="page-header">
-      <h3>All Films Rated <em><?php echo $rating ?></em></h3>
+      <h3>
+        <a role="button" class="btn btn-link btn-lg" aria-label="Left Align" href="search.php">
+          <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        </a>
+        All Films Rated <em><?php echo $rating ?></em>
+      </h3>
     </div>
 
     <ul class="list-group">
